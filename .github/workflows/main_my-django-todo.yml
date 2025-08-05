@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r ./todo/requirements.txt
+          pip install -r todo/requirements.txt
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
@@ -62,4 +62,5 @@ jobs:
           package: .
 
           
+
 
