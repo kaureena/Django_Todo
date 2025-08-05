@@ -45,9 +45,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
 
     steps:
       - name: Download artifact from build job
@@ -55,17 +52,11 @@ jobs:
         with:
           name: python-app
       
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_79BC994E1B7E4782B9E4EF5E8620413D }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C7ECBDBC8BD942458A33437F5FD69971 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_505F406078694EB1B82B79CE7CD1BB0C }}
-
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
-        id: deploy-to-webapp
         with:
-          app-name: 'my-django-todo'
-          slot-name: 'Production'
+          app-name: 'my-django-todo' # Your Azure App Service name
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .
+
           
